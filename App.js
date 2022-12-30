@@ -10,6 +10,7 @@ import COLORS from "./constants/colors";
 
 export default function App() {
   const [userNumber, setUserNumber] = useState();
+  const [numGuesses, setNumGuesses] = useState(0);
   const [gameOver, setGameOver] = useState(false);
 
   const [fontsLoaded] = useFonts({
@@ -20,6 +21,12 @@ export default function App() {
   if (!fontsLoaded) {
     return <AppLoading />;
   }
+
+  const restartGameHandler = () => {
+    setUserNumber();
+    setNumGuesses(0);
+    setGameOver(false);
+  };
 
   return (
     <LinearGradient
@@ -34,9 +41,9 @@ export default function App() {
       >
         <SafeAreaView style={styles.rootScreen}>
           {gameOver ? (
-            <GameOverScreen />
+            <GameOverScreen numGuesses={numGuesses} userNumber={userNumber} restartGameHandler={restartGameHandler} />
           ) : userNumber ? (
-            <GameScreen userNumber={userNumber} setGameOver={setGameOver} />
+            <GameScreen userNumber={userNumber} setGameOver={setGameOver} setNumGuesses={setNumGuesses} />
           ) : (
             <StartGameScreen setUserNumber={setUserNumber} />
           )}
