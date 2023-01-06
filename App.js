@@ -7,6 +7,7 @@ import StartGameScreen from "./screens/StartGameScreen";
 import GameScreen from "./screens/GameScreen";
 import GameOverScreen from "./screens/GameOverScreen";
 import COLORS from "./constants/colors";
+import { StatusBar } from "expo-status-bar";
 
 export default function App() {
   const [userNumber, setUserNumber] = useState();
@@ -29,27 +30,38 @@ export default function App() {
   };
 
   return (
-    <LinearGradient
-      colors={[COLORS.primary700, COLORS.secondary500]}
-      style={styles.rootScreen}
-    >
-      <ImageBackground
+    <>
+      <StatusBar style="light" />
+      <LinearGradient
+        colors={[COLORS.primary700, COLORS.secondary500]}
         style={styles.rootScreen}
-        source={require("./assets/images/background.png")}
-        resizeMode="cover"
-        imageStyle={styles.backgroundImage}
       >
-        <SafeAreaView style={styles.rootScreen}>
-          {gameOver ? (
-            <GameOverScreen numGuesses={numGuesses} userNumber={userNumber} restartGameHandler={restartGameHandler} />
-          ) : userNumber ? (
-            <GameScreen userNumber={userNumber} setGameOver={setGameOver} setNumGuesses={setNumGuesses} />
-          ) : (
-            <StartGameScreen setUserNumber={setUserNumber} />
-          )}
-        </SafeAreaView>
-      </ImageBackground>
-    </LinearGradient>
+        <ImageBackground
+          style={styles.rootScreen}
+          source={require("./assets/images/background.png")}
+          resizeMode="cover"
+          imageStyle={styles.backgroundImage}
+        >
+          <SafeAreaView style={styles.rootScreen}>
+            {gameOver ? (
+              <GameOverScreen
+                numGuesses={numGuesses}
+                userNumber={userNumber}
+                restartGameHandler={restartGameHandler}
+              />
+            ) : userNumber ? (
+              <GameScreen
+                userNumber={userNumber}
+                setGameOver={setGameOver}
+                setNumGuesses={setNumGuesses}
+              />
+            ) : (
+              <StartGameScreen setUserNumber={setUserNumber} />
+            )}
+          </SafeAreaView>
+        </ImageBackground>
+      </LinearGradient>
+    </>
   );
 }
 
